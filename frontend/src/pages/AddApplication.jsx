@@ -1,17 +1,35 @@
-// frontend/src/pages/AddApplication.jsx
 
 import React from 'react';
 import ApplicationForm from '../components/ApplicationForm/ApplicationForm';
+import { useNavigate } from 'react-router-dom';
+import { createApplication } from '../services/apiService';
 
 const AddApplication = () => {
-  return (
-    <div className="card shadow p-4"> 
-      <div className="card-body">
-        <h2 className="card-title mb-4">➕ Add New Job Application</h2>
-        <ApplicationForm />
-      </div>
-    </div>
-  );
+    const navigate = useNavigate();
+
+    const handleSubmission = async (formData) => {
+ 
+        try {
+            await createApplication(formData);
+            
+            navigate('/', { state: { successMessage: 'Job application successfully added!' } }); 
+
+        } catch (err) {
+     
+            throw err;
+        }
+    };
+
+    return (
+        <>
+            <div className="row justify-content-center">
+                <div className="col-md-8 col-lg-6">
+                    {/* Pass the submission handler down to the form */}
+                    <ApplicationForm onSubmitSuccess={handleSubmission} />
+                </div>
+            </div>
+        </>
+    );
 };
 
 export default AddApplication;

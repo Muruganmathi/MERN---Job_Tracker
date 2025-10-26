@@ -1,23 +1,36 @@
-// frontend/src/pages/Home.jsx (FINAL CENTERING FIX)
 
-import React from 'react';
+import React, { useState } from 'react';
 import ApplicationList from '../components/ApplicationList/ApplicationList';
+import { useLocation } from 'react-router-dom';
 
 const Home = () => {
-  return (
-    <section>
-      <h2 className="mb-4">📋 All Job Applications</h2>
-      {/* Key Fix: Ensure the card is centered within the main container on large screens. */}
-      {/* We use 'col-lg-10' to limit the width on large screens and 'mx-auto' to center it. */}
-      <div className="row justify-content-center">
-        <div className="col-12 col-xl-10"> {/* Col-12 ensures full width on mobile, Col-xl-10 limits width on desktop */}
-          <div className="card shadow p-4">
-            <ApplicationList />
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+    const [refreshTrigger, setRefreshTrigger] = useState(0); 
+
+    const handleListRefresh = () => {
+        setRefreshTrigger(prev => prev + 1);
+    };
+
+    const location = useLocation();
+
+    const successMessage = location.state?.successMessage;
+    
+    return (
+        <>
+            <h2 className="mb-4 text-center">
+                <span role="img" aria-label="Clipboard">📋</span> All Job Applications
+            </h2>
+            
+            {successMessage && (
+                <div className="alert alert-success alert-dismissible fade show" role="alert">
+                    {successMessage}
+                    <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            )}
+
+            {/* Pass the refresh trigger to the list component */}
+            <ApplicationList refreshTrigger={refreshTrigger} onRefresh={handleListRefresh} />
+        </>
+    );
 };
 
 export default Home;

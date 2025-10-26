@@ -1,4 +1,3 @@
-// frontend/src/components/StatusBadge/StatusBadge.jsx
 
 import React from 'react';
 
