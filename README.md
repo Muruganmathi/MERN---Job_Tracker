@@ -26,11 +26,11 @@ PORT=4000
 
 4️⃣ Start the Backend Server
 cd backend
-npm start
+npm run dev
 
 5️⃣ Start the Frontend (React App)
 cd ../frontend
-npm start
+npm run dev
 
 🔗 API Endpoints (Backend Overview)
 Method	Endpoint	Description
